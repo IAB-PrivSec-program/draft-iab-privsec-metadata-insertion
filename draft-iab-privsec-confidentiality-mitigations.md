@@ -2,7 +2,7 @@
 title: Confidentiality in the Face of Pervasive Surveillance
 abbrev: privsec-mitigations 
 docname: draft-iab-privsec-confidentiality-mitigations-latest
-date: 2014-11-25
+date: 2015-04-29
 category: info
 
 ipr: trust200902
@@ -17,6 +17,7 @@ author:
  -
     ins: T. Hardie
     name: Ted Hardie
+    role: Editor
     email: ted.ietf@gmail.com
 
 normative:
