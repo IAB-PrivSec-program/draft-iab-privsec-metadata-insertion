@@ -1,26 +1,16 @@
 # |DRAFT-TITLE|
 
-This is the working area for the [IETF |WG-TITLE| Working
-Group](https://trac.tools.ietf.org/wg/|WG-NAME|/trac/wiki) draft of |DRAFT-TITLE|
-
-* [Editor's copy](https://rtcweb-wg.github.io/security-arch/)
-* [Working Group Draft] (https://tools.ietf.org/html/|DRAFT-NAME|)
-
+This is the working area for the IAB privsec-program draft of draft-iab-privsec-confidentiality-mitigations
 
 ## Contributing
 
-Before submitting feedback, please familiarize yourself with our current issues
-list and review the [working group home page](|WG-HOMEPAGE|). If you're
-new to this, you may also want to read the [Tao of the
-IETF](https://www.ietf.org/tao.html).
 
 Be aware that all contributions to the specification fall under the "NOTE WELL"
 terms outlined below.
 
 1. The best way to provide feedback (editorial or design) and ask questions is
-sending an e-mail to [our mailing
-list](https://www.ietf.org/mailman/listinfo/|WG-NAME|). This will ensure that
-the entire Working Group sees your input in a timely fashion.
+sending an e-mail to privsec-program@iab.org. This will ensure that
+the entire program sees your input in a timely fashion.
 
 2. If you have **editorial** suggestions (i.e., those that do not change the
 meaning of the specification), you can either:
@@ -57,7 +47,7 @@ You may also need to install kramdown-xml2rfc, which requires Ruby and can be
 installed using the roby package manager, `gem`:
 
 ```sh
-$ gem install kramdown-xml2rfc
+$ gem install kramdown-rfc2629
 ```
 
 Other tools can be used to produce PDF files, or to provide a comparison.  These
