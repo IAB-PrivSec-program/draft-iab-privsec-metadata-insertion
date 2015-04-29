@@ -1,4 +1,4 @@
-# |DRAFT-TITLE|
+# draft-iab-privsec-confidentiality-mitigations
 
 This is the working area for the IAB privsec-program draft of draft-iab-privsec-confidentiality-mitigations
 
