@@ -73,11 +73,14 @@ Available Mitigations	{#responses}
 
 Given the threat model laid out in
 {{I-D.iab-privsec-confidentiality-threat}}., how should the Internet
-technical community respond to pervasive attack?The cost and risk
+technical community respond to pervasive attack?  The cost and risk
 considerations discussed in it provide a guide to responses.  Namely,
-responses to passive attack should close off avenues for attack that
+responses to passive attack should close off avenues for those attacks that
 are safe, scalable, and cheap, forcing the attacker to mount attacks
-that expose it to higher cost and risk.
+that expose it to higher cost and risk.  Protocols and security measures
+protecting against active attacks must also limit the impact of 
+compromise and malfeasance by avoiding systems which grant universal
+credentials. 
 
 
 In this section, we discuss a collection of high-level approaches to
@@ -130,7 +133,7 @@ Thus, in designing protocols to be resistant to pervasive passive
 attacks, protocol designers should consider what information is left
 unencrypted in the protocol, and how that information might be
 correlated with other traffic.  Information that cannot be encrypted
-should be anonymized, i.  e.  , it should be dissociated from other
+should be anonymized, i.e., it should be dissociated from other
 information.  For example, the Tor overlay routing network anonymizes
 IP addresses by using multi-hop onion routing.
 
@@ -179,7 +182,6 @@ These ciphersuites are thus vulnerable to a static key exfiltration
 attack - if the attacker obtains the server's private key once, then
 they can decrypt all past and future sessions for that server.
 
-
 Static key exfiltration attacks are prevented by including ephemeral,
 per-session secret information in the keys used for a session.  Most
 IETF security protocols include modes of operation that have this
@@ -222,7 +224,6 @@ PGP systems for secure email both deny intermediate servers access to
 certain parts of the message {{RFC5750}}{{RFC2015}}.  Even if a server
 were to provide an attacker with full access, the attacker would still
 not be able to read the protected parts of the message.
-
 
 Mechanisms like S/MIME and PGP are often referred to as
 "end-to-end"security mechanisms, as opposed to "hop-by-hop" or
@@ -276,16 +277,21 @@ information that is exposed to servers.  In many other cases, however,
 the need is simply to make the best use we can of the cryptographic
 tools we have.
 
-Interplay among Responses
+Interplay among Mitigations
 =========================
 
-There is work in progress in IEEE 802 to organize the “randomization”
-of MAC Addresses, ensuring that the address varies as the device
+One of the key considerations in selecting mitigations is how to 
+manage the interplay among different mechanisms.  Care must be taken
+to avoid situations where a mitigation is rendered fruitless because 
+of a different mitigation is working at a different time scale or
+with a different aim.  As an example, there is work in progress in 
+IEEE 802 to organize the “randomization” of MAC Addresses, 
+ensuring that the address varies as the device
 connects to different networks, or connects at different times. In
 theory, the randomization will mitigate the tracking by MAC
 address. However, the randomization will be defeated if the adversary
-can link the randomized MAC address to other identifiers such as for
-example the interface identifier in IPv6 addresses, the unique
+can link the randomized MAC address to other identifiers such as the 
+interface identifier in IPv6 addresses, the unique
 identifiers used in DHCP or DHCPv6, or unique identifiers used in
 various link-local discovery protocols.  The need to consider the
 interplay among responses is a general one, and this section exams
