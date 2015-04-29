@@ -17,7 +17,7 @@ author:
  -
     ins: T. Hardie
     name: Ted Hardie
-    role: Editor
+    role: editor
     email: ted.ietf@gmail.com
 
 normative:
