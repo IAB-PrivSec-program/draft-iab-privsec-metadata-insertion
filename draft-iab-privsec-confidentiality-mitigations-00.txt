@@ -2,10 +2,10 @@
 
 
 
-IAB                                                            T. Hardie
-Internet-Draft                                         November 25, 2014
+IAB                                                       T. Hardie, Ed.
+Internet-Draft                                            April 29, 2015
 Intended status: Informational
-Expires: May 29, 2015
+Expires: October 31, 2015
 
 
          Confidentiality in the Face of Pervasive Surveillance
@@ -36,11 +36,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on May 29, 2015.
+   This Internet-Draft will expire on October 31, 2015.
 
 Copyright Notice
 
-   Copyright (c) 2014 IETF Trust and the persons identified as the
+   Copyright (c) 2015 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Hardie                    Expires May 29, 2015                  [Page 1]
+Hardie                  Expires October 31, 2015                [Page 1]
 
-Internet-Draft             privsec-mitigations             November 2014
+Internet-Draft             privsec-mitigations                April 2015
 
 
    the Trust Legal Provisions and are provided without warranty as
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Hardie                    Expires May 29, 2015                  [Page 2]
+Hardie                  Expires October 31, 2015                [Page 2]
 
-Internet-Draft             privsec-mitigations             November 2014
+Internet-Draft             privsec-mitigations                April 2015
 
 
    +--------------------------+----------------------------------------+
@@ -165,9 +165,9 @@ Internet-Draft             privsec-mitigations             November 2014
 
 
 
-Hardie                    Expires May 29, 2015                  [Page 3]
+Hardie                  Expires October 31, 2015                [Page 3]
 
-Internet-Draft             privsec-mitigations             November 2014
+Internet-Draft             privsec-mitigations                April 2015
 
 
    As with traditional, limited active attacks, the basic mitigation to
@@ -221,9 +221,9 @@ Internet-Draft             privsec-mitigations             November 2014
 
 
 
-Hardie                    Expires May 29, 2015                  [Page 4]
+Hardie                  Expires October 31, 2015                [Page 4]
 
-Internet-Draft             privsec-mitigations             November 2014
+Internet-Draft             privsec-mitigations                April 2015
 
 
    property.  These modes are known in the literature under the heading
@@ -277,9 +277,9 @@ Internet-Draft             privsec-mitigations             November 2014
 
 
 
-Hardie                    Expires May 29, 2015                  [Page 5]
+Hardie                  Expires October 31, 2015                [Page 5]
 
-Internet-Draft             privsec-mitigations             November 2014
+Internet-Draft             privsec-mitigations                April 2015
 
 
    o Two users messaging via Facebook over HTTPS are protected against
@@ -333,9 +333,9 @@ Internet-Draft             privsec-mitigations             November 2014
 
 
 
-Hardie                    Expires May 29, 2015                  [Page 6]
+Hardie                  Expires October 31, 2015                [Page 6]
 
-Internet-Draft             privsec-mitigations             November 2014
+Internet-Draft             privsec-mitigations                April 2015
 
 
    with a different aim.  As an example, there is work in progress in
@@ -389,9 +389,9 @@ Internet-Draft             privsec-mitigations             November 2014
 
 
 
-Hardie                    Expires May 29, 2015                  [Page 7]
+Hardie                  Expires October 31, 2015                [Page 7]
 
-Internet-Draft             privsec-mitigations             November 2014
+Internet-Draft             privsec-mitigations                April 2015
 
 
    [RFC4306]  Kaufman, C., "Internet Key Exchange (IKEv2) Protocol", RFC
@@ -417,7 +417,7 @@ Internet-Draft             privsec-mitigations             November 2014
 
 Author's Address
 
-   Ted Hardie
+   Ted Hardie (editor)
 
    Email: ted.ietf@gmail.com
 
@@ -445,4 +445,4 @@ Author's Address
 
 
 
-Hardie                    Expires May 29, 2015                  [Page 8]
+Hardie                  Expires October 31, 2015                [Page 8]
