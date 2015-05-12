@@ -101,6 +101,7 @@ attack.
    | Active                   | Authentication, monitoring             |
    |                          |                                        |
    | Metadata Analysis        | Data Minimiaztion                      |
+   |                          |                                        |
    | Static key exfiltration  | Encryption with per-session state      |
    |                          | (PFS)                                  |
    |                          |                                        |
@@ -134,18 +135,18 @@ all of the connections are encrypted.
 Thus, in designing protocols to be resistant to pervasive passive
 attacks, protocol designers should consider what information is left
 unencrypted in the protocol, and how that information might be
-correlated with other traffic.  Information that cannot be encrypted
-should be anonymized, i.e., it should be dissociated from other
+correlated with other traffic.  Some of the data left unencrypted may be 
+considered "metadata" within the context of a single protocol, as it 
+provides adjunct information used for delivery or display, rather than the 
+data directly created or consumed by protocol users.  This does not mean
+it is not useful to attackers, however, and when this metadata is not 
+protected by encryption it may leak substantial amounts of information.
+Data minimization  strategies should thus be applied to any data left 
+unencrypted, whether it be payload or metadata.  Information that cannot 
+be encrypted or omited should be be dissociated from other
 information.  For example, the Tor overlay routing network anonymizes
-IP addresses by using multi-hop onion routing.
+IP addresses of by using multi-hop onion routing.
 
-Some of the data left unencrypted may be considered "metadata" within
-the context of a single protocol, as it provides adjunct information used
-for delivery or display, rather than the data directly created or consumed
-by protocol users.  When this metadata is not protected by encryption
-it may leak substantial amounts of information.  Data minimization 
-strategies should thus be applied to any data left unencrypted, whether 
-it be payload or metadata.
 
 As with traditional, limited active attacks, the basic mitigation to
 pervasive active attack is to enable the endpoints of a communication
