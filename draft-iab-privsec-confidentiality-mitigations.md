@@ -169,9 +169,16 @@ technologies, which make correlation more difficult.  Typical
 approaches to anonymization against traffic analysis include:
 
  o Aggregation: Routing sessions for many endpoints through a common
- mid-point (e.g, an HTTP proxy).  Since the midpoint appears as
- the end of the communication, individual endpoints cannot be
- distinguished.
+ mid-point (e.g, an HTTP proxy).  The midpoint appears as
+ the origin of the communication when traffic analysis is conducted
+ from points after it, so individual sources cannot be distinguished.
+ If traffic analysis is being conducted prior to the mid-point, all
+ flows appear to be destined to the same point, which leaks very little
+ information.  Even when traffic analysis is being performed both
+ before and after the mid-point, simultaneous connections may make it 
+ difficult to corelate the traffic going into and out of the mid-point.
+ For this to be effective as a mitigation, traffic to the mid-point must
+ be encrypted and traffic from the mid-point should be.
 
  o Onion routing: Routing a session through several mid-points, rather
 than directly end-to-end, with encryption that guarantees that each
@@ -181,7 +188,16 @@ simultaneously.
 
  o Multi-path: Routing different sessions via different paths (even if
  they originate from the same endpoint).  This reduces the probability
- that the same attacker will be able to collect many sessions.
+ that the same attacker will be able to collect many sessions or associate
+ them with the same individual.  If, for example, a device has both a
+ cellular and 802.11 interface, routing some traffic across the cellular
+ network and other traffic over the 802.11 interface means that traffic 
+ analysis conducted only with one network will be incomplete.  Even if 
+ conducted in both, it may be more difficult for the attacker to associate
+ the traffic in each network with the other.  For this to be effective
+ as a mitigation, signalling protocols which gather and transmit data
+ about multiple interfaces (such as SIP) must be encrypted to avoid the
+ information being used in cross-corelation.
 
 An encrypted, authenticated session is safe from content-monitoring
 attacks in which neither end collaborates with the attacker, but can
@@ -255,7 +271,7 @@ against this risk.
 
 o Two users exchanging PGP-protected email have protected the content
 of their exchange from network attackers and intermediate servers, but
-the header information (e. g.  , To and From addresses) is
+the header information (e. g., To and From addresses) is
 unnecessarily exposed to passive and active attackers that can see
 communications among the mail agents handling the email messages.
 These mail agents need to use hop-by-hop encryption and traffic
@@ -282,7 +298,7 @@ crypto systems are one of the few things you can rely on".
 The task for the Internet community is to ensure that applications are
 able to use the strong crypto systems we have defined - for example,
 TLS with PFS ciphersuites - and that these properly implemented.
-(And, one might add, turned on!)Some of this work will require
+(And, one might add, turned on!) Some of this work will require
 architectural changes to applications, e. g., in order to limit the
 information that is exposed to servers.  In many other cases, however,
 the need is simply to make the best use we can of the cryptographic
@@ -305,8 +321,8 @@ can link the randomized MAC address to other identifiers such as the
 interface identifier in IPv6 addresses, the unique
 identifiers used in DHCP or DHCPv6, or unique identifiers used in
 various link-local discovery protocols.  The need to consider the
-interplay among responses is a general one, and this section exams
-some common interactions.
+interplay among responses is a general one, and this section will 
+examine some common interactions.
 
 
 IANA Considerations
