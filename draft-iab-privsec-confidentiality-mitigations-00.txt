@@ -3,13 +3,13 @@
 
 
 IAB                                                       T. Hardie, Ed.
-Internet-Draft                                            April 29, 2015
-Intended status: Informational
-Expires: October 31, 2015
+Internet-Draft
+Intended status: Informational                              May 19, 2015
+Expires: November 20, 2015
 
 
          Confidentiality in the Face of Pervasive Surveillance
-          draft-iab-privsec-confidentiality-mitigations-latest
+            draft-iab-privsec-confidentiality-mitigations-00
 
 Abstract
 
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on October 31, 2015.
+   This Internet-Draft will expire on November 20, 2015.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Hardie                  Expires October 31, 2015                [Page 1]
+Hardie                  Expires November 20, 2015               [Page 1]
 
-Internet-Draft             privsec-mitigations                April 2015
+Internet-Draft             privsec-mitigations                  May 2015
 
 
    the Trust Legal Provisions and are provided without warranty as
@@ -65,13 +65,13 @@ Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
    2.  Available Mitigations . . . . . . . . . . . . . . . . . . . .   2
-   3.  Interplay among Mitigations . . . . . . . . . . . . . . . . .   6
+   3.  Interplay among Mitigations . . . . . . . . . . . . . . . . .   7
    4.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   7
-   5.  Security Considerations . . . . . . . . . . . . . . . . . . .   7
-   6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   7
-     6.1.  Normative References  . . . . . . . . . . . . . . . . . .   7
-     6.2.  Informative References  . . . . . . . . . . . . . . . . .   7
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   8
+   5.  Security Considerations . . . . . . . . . . . . . . . . . . .   8
+   6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   8
+     6.1.  Normative References  . . . . . . . . . . . . . . . . . .   8
+     6.2.  Informative References  . . . . . . . . . . . . . . . . .   8
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   9
 
 1.  Introduction
 
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Hardie                  Expires October 31, 2015                [Page 2]
+Hardie                  Expires November 20, 2015               [Page 2]
 
-Internet-Draft             privsec-mitigations                April 2015
+Internet-Draft             privsec-mitigations                  May 2015
 
 
    +--------------------------+----------------------------------------+
@@ -122,6 +122,8 @@ Internet-Draft             privsec-mitigations                April 2015
    | Passive inference        | Path differentiation                   |
    |                          |                                        |
    | Active                   | Authentication, monitoring             |
+   |                          |                                        |
+   | Metadata Analysis        | Data Minimiaztion                      |
    |                          |                                        |
    | Static key exfiltration  | Encryption with per-session state      |
    |                          | (PFS)                                  |
@@ -156,19 +158,26 @@ Internet-Draft             privsec-mitigations                April 2015
    Thus, in designing protocols to be resistant to pervasive passive
    attacks, protocol designers should consider what information is left
    unencrypted in the protocol, and how that information might be
-   correlated with other traffic.  Information that cannot be encrypted
-   should be anonymized, i.e., it should be dissociated from other
-   information.  For example, the Tor overlay routing network anonymizes
-   IP addresses by using multi-hop onion routing.
+   correlated with other traffic.  Some of the data left unencrypted may
+   be considered "metadata" within the context of a single protocol, as
+   it provides adjunct information used for delivery or display, rather
+   than the data directly created or consumed by protocol users.  This
 
 
 
-
-
-Hardie                  Expires October 31, 2015                [Page 3]
+Hardie                  Expires November 20, 2015               [Page 3]
 
-Internet-Draft             privsec-mitigations                April 2015
+Internet-Draft             privsec-mitigations                  May 2015
 
+
+   does not mean it is not useful to attackers, however, and when this
+   metadata is not protected by encryption it may leak substantial
+   amounts of information.  Data minimization strategies should thus be
+   applied to any data left unencrypted, whether it be payload or
+   metadata.  Information that cannot be encrypted or omited should be
+   be dissociated from other information.  For example, the Tor overlay
+   routing network anonymizes IP addresses of by using multi-hop onion
+   routing.
 
    As with traditional, limited active attacks, the basic mitigation to
    pervasive active attack is to enable the endpoints of a communication
@@ -191,9 +200,16 @@ Internet-Draft             privsec-mitigations                April 2015
    approaches to anonymization against traffic analysis include:
 
    o Aggregation: Routing sessions for many endpoints through a common
-   mid-point (e.g, an HTTP proxy).  Since the midpoint appears as the
-   end of the communication, individual endpoints cannot be
-   distinguished.
+   mid-point (e.g, an HTTP proxy).  The midpoint appears as the origin
+   of the communication when traffic analysis is conducted from points
+   after it, so individual sources cannot be distinguished.  If traffic
+   analysis is being conducted prior to the mid-point, all flows appear
+   to be destined to the same point, which leaks very little
+   information.  Even when traffic analysis is being performed both
+   before and after the mid-point, simultaneous connections may make it
+   difficult to corelate the traffic going into and out of the mid-
+   point.  For this to be effective as a mitigation, traffic to the mid-
+   point must be encrypted and traffic from the mid-point should be.
 
    o Onion routing: Routing a session through several mid-points, rather
    than directly end-to-end, with encryption that guarantees that each
@@ -201,9 +217,27 @@ Internet-Draft             privsec-mitigations                April 2015
    source and destination of a communication are never revealed
    simultaneously.
 
+
+
+
+
+Hardie                  Expires November 20, 2015               [Page 4]
+
+Internet-Draft             privsec-mitigations                  May 2015
+
+
    o Multi-path: Routing different sessions via different paths (even if
    they originate from the same endpoint).  This reduces the probability
-   that the same attacker will be able to collect many sessions.
+   that the same attacker will be able to collect many sessions or
+   associate them with the same individual.  If, for example, a device
+   has both a cellular and 802.11 interface, routing some traffic across
+   the cellular network and other traffic over the 802.11 interface
+   means that traffic analysis conducted only with one network will be
+   incomplete.  Even if conducted in both, it may be more difficult for
+   the attacker to associate the traffic in each network with the other.
+   For this to be effective as a mitigation, signalling protocols which
+   gather and transmit data about multiple interfaces (such as SIP) must
+   be encrypted to avoid the information being used in cross-corelation.
 
    An encrypted, authenticated session is safe from content-monitoring
    attacks in which neither end collaborates with the attacker, but can
@@ -218,14 +252,6 @@ Internet-Draft             privsec-mitigations                April 2015
    Static key exfiltration attacks are prevented by including ephemeral,
    per-session secret information in the keys used for a session.  Most
    IETF security protocols include modes of operation that have this
-
-
-
-Hardie                  Expires October 31, 2015                [Page 4]
-
-Internet-Draft             privsec-mitigations                April 2015
-
-
    property.  These modes are known in the literature under the heading
    "perfect forward secrecy" (PFS) because even if an adversary has all
    of the secrets for one session, the next session will use new,
@@ -248,6 +274,14 @@ Internet-Draft             privsec-mitigations                April 2015
    opportunity for dynamic key exfiltration.  Collaborators engaging in
    key exfiltration through a standard protocol will need to use covert
    channels in the protocol to leak information that can be used by the
+
+
+
+Hardie                  Expires November 20, 2015               [Page 5]
+
+Internet-Draft             privsec-mitigations                  May 2015
+
+
    attacker to recover the key.  Such use of covert channels has been
    demonstrated for SSL, TLS, and SSH.  Any protocol bits that can be
    freely set by the collaborator can be used as a covert channel,
@@ -275,13 +309,6 @@ Internet-Draft             privsec-mitigations                April 2015
    intermediate nodes.  Thus, neither of these mechanisms provides
    complete protection by itself.  For example:
 
-
-
-Hardie                  Expires October 31, 2015                [Page 5]
-
-Internet-Draft             privsec-mitigations                April 2015
-
-
    o Two users messaging via Facebook over HTTPS are protected against
    passive and active attackers in the network between the users and
    Facebook.  However, if Facebook is a collaborator in an exfiltration
@@ -291,7 +318,7 @@ Internet-Draft             privsec-mitigations                April 2015
 
    o Two users exchanging PGP-protected email have protected the content
    of their exchange from network attackers and intermediate servers,
-   but the header information (e. g.  , To and From addresses) is
+   but the header information (e. g., To and From addresses) is
    unnecessarily exposed to passive and active attackers that can see
    communications among the mail agents handling the email messages.
    These mail agents need to use hop-by-hop encryption and traffic
@@ -302,6 +329,15 @@ Internet-Draft             privsec-mitigations                April 2015
    mechanisms), since they operate at the level of objects, rather than
    communications sessions.  Such secure object can be safely handled by
    intermediaries in order to realize, for example, store and forward
+
+
+
+
+Hardie                  Expires November 20, 2015               [Page 6]
+
+Internet-Draft             privsec-mitigations                  May 2015
+
+
    messaging.  In the examples above, the encrypted instant messages or
    email messages would be the secure objects.
 
@@ -318,9 +354,9 @@ Internet-Draft             privsec-mitigations                April 2015
    The task for the Internet community is to ensure that applications
    are able to use the strong crypto systems we have defined - for
    example, TLS with PFS ciphersuites - and that these properly
-   implemented.  (And, one might add, turned on!)Some of this work will
-   require architectural changes to applications, e. g., in order to
-   limit the information that is exposed to servers.  In many other
+   implemented.  (And, one might add, turned on!)  Some of this work
+   will require architectural changes to applications, e. g., in order
+   to limit the information that is exposed to servers.  In many other
    cases, however, the need is simply to make the best use we can of the
    cryptographic tools we have.
 
@@ -330,14 +366,6 @@ Internet-Draft             privsec-mitigations                April 2015
    manage the interplay among different mechanisms.  Care must be taken
    to avoid situations where a mitigation is rendered fruitless because
    of a different mitigation is working at a different time scale or
-
-
-
-Hardie                  Expires October 31, 2015                [Page 6]
-
-Internet-Draft             privsec-mitigations                April 2015
-
-
    with a different aim.  As an example, there is work in progress in
    IEEE 802 to organize the "randomization" of MAC Addresses, ensuring
    that the address varies as the device connects to different networks,
@@ -348,11 +376,23 @@ Internet-Draft             privsec-mitigations                April 2015
    addresses, the unique identifiers used in DHCP or DHCPv6, or unique
    identifiers used in various link-local discovery protocols.  The need
    to consider the interplay among responses is a general one, and this
-   section exams some common interactions.
+   section will examine some common interactions.
 
 4.  IANA Considerations
 
    This memo makes no request of IANA.
+
+
+
+
+
+
+
+
+Hardie                  Expires November 20, 2015               [Page 7]
+
+Internet-Draft             privsec-mitigations                  May 2015
+
 
 5.  Security Considerations
 
@@ -370,7 +410,7 @@ Internet-Draft             privsec-mitigations                April 2015
               Trammell, B., Huitema, C., and D. Borkmann,
               "Confidentiality in the Face of Pervasive Surveillance: A
               Threat Model and Problem Statement", draft-iab-privsec-
-              confidentiality-threat-04 (work in progress), March 2015.
+              confidentiality-threat-06 (work in progress), May 2015.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, March 1997.
@@ -385,14 +425,6 @@ Internet-Draft             privsec-mitigations                April 2015
 
    [RFC4301]  Kent, S. and K. Seo, "Security Architecture for the
               Internet Protocol", RFC 4301, December 2005.
-
-
-
-
-Hardie                  Expires October 31, 2015                [Page 7]
-
-Internet-Draft             privsec-mitigations                April 2015
-
 
    [RFC4306]  Kaufman, C., "Internet Key Exchange (IKEv2) Protocol", RFC
               4306, December 2005.
@@ -410,6 +442,13 @@ Internet-Draft             privsec-mitigations                April 2015
 
    [RFC6962]  Laurie, B., Langley, A., and E. Kasper, "Certificate
               Transparency", RFC 6962, June 2013.
+
+
+
+Hardie                  Expires November 20, 2015               [Page 8]
+
+Internet-Draft             privsec-mitigations                  May 2015
+
 
    [STRINT]   S Farrell, ., "Strint Workshop Report", April 2014,
               <https://www.w3.org/2014/strint/draft-iab-strint-
@@ -445,4 +484,21 @@ Author's Address
 
 
 
-Hardie                  Expires October 31, 2015                [Page 8]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hardie                  Expires November 20, 2015               [Page 9]
