@@ -2,7 +2,7 @@
 title: Confidentiality in the Face of Pervasive Surveillance
 abbrev: privsec-mitigations 
 docname: draft-iab-privsec-confidentiality-mitigations-latest
-date: 2015-05-19
+date: 2015-06-02
 category: info
 
 ipr: trust200902
@@ -34,6 +34,7 @@ informative:
   RFC4306:
   RFC5246:
   RFC2015:
+  I-D.draft-vandergaast-edns-client-subnet:
   STRINT:
     target: https://www.w3.org/2014/strint/draft-iab-strint-report.html
     title:  Strint Workshop Report
@@ -69,6 +70,76 @@ for those threats and to lay out the interactions among them should
 they be deployed in combination.
 
 
+# Terminology {#terminology}
+
+This document makes extensive use of standard security and privacy
+terminology; see {{RFC4949}} and {{RFC6973}}. Terms used from
+{{RFC6973}} include Eavesdropper, Observer, Initiator, Intermediary,
+Recipient, Attack (in a privacy context), Correlation, Fingerprint,
+Traffic Analysis, and Identifiability (and related terms). In
+addition, we use a few terms that are specific to the attacks
+discussed in this document. Note especially that "passive" and "active" below
+do not refer to the effort used to mount the attack; a "passive attack"
+is any attack that accesses a flow but does not modify it, while an
+"active attack" is any attack that modifies a flow.  Some passive attacks
+involve active interception and modifications of devices, rather than simple
+access to the medium.  The introduced terms are:
+
+Pervasive Attack:
+: An attack on Internet communications that makes
+use of access at a large number of points in the network, or otherwise
+provides the attacker with access to a large amount of Internet
+traffic; see {{RFC7258}}.
+
+Passive Pervasive Attack:  
+: An eavesdropping attack undertaken by a pervasive attacker, in which the
+packets in a traffic stream between two endpoints are intercepted, but
+in which the attacker does not modify the packets in the traffic
+stream between two endpoints, modify the treatment of packets in the
+traffic stream (e.g. delay, routing), or add or remove packets in the
+traffic stream. Passive pervasive attacks are undetectable from the
+endpoints.  Equivalent to passive wiretapping as defined in {{RFC4949}};
+we use an alternate term here since the methods employed are wider
+than those implied by the word "wiretapping", including the active
+compromise of intermediate systems.
+
+Active Pervasive Attack:
+: An attack undertaken by a pervasive attacker, which in addition to
+the elements of a passive pervasive attack, also includes modification,
+addition, or removal of
+packets in a traffic stream, or modification of treatment of packets
+in the traffic stream. Active pervasive attacks provide more
+capabilities to the attacker at the risk of possible detection at the
+endpoints. Equivalent to active wiretapping as defined in {{RFC4949}}.
+
+Observation:
+: Information collected directly from communications by an
+eavesdropper or observer. For example, the knowledge that
+&lt;alice@example.com&gt; sent a message to &lt;bob@example.com&gt;
+via SMTP taken from the headers of an observed SMTP message would be
+an observation.
+
+Inference:
+: Information derived from analysis of information collected
+directly from communications by an eavesdropper or observer. For
+example, the knowledge that a given web page was accessed by a given
+IP address, by comparing the size in octets of measured network flow
+records to fingerprints derived from known sizes of linked resources
+on the web servers involved, would be an inference.
+
+Collaborator:
+: An entity that is a legitimate participant in a communication, and provides information about that communication to an attacker. Collaborators may either deliberately or unwittingly cooperate with the attacker, in the latter case because the attacker has subverted the collaborator through technical, social, or other means.
+
+Key Exfiltration:
+: The transmission of cryptographic keying material for an encrypted communication
+from a collaborator, deliberately or unwittingly, to an attacker.
+
+Content Exfiltration:
+: The transmission of the content of a communication from a collaborator, deliberately or unwittingly, to an attacker.
+
+Data Minimization: 
+With respect to protocol design, refers to the practice of only exposing the minimum amount of data or metadata necessary for the task supported by that protocol to the other endpoint(s) and/or devices along the path.
+
 Available Mitigations	{#responses}
 =====================
 
@@ -100,7 +171,7 @@ attack.
    |                          |                                        |
    | Active                   | Authentication, monitoring             |
    |                          |                                        |
-   | Metadata Analysis        | Data Minimiaztion                      |
+   | Metadata Analysis        | Data Minimization                      |
    |                          |                                        |
    | Static key exfiltration  | Encryption with per-session state      |
    |                          | (PFS)                                  |
@@ -304,34 +375,61 @@ information that is exposed to servers.  In many other cases, however,
 the need is simply to make the best use we can of the cryptographic
 tools we have.
 
-Interplay among Mitigations
+Some tools that we currently have can also be used for mitigating 
+pervasive attacks, but since they have not generally been designed
+with this in mind, they may need elaboration or adjustment to be
+completely suitable.  The next section examines one common reason
+for such adjustment:  managing the integration of one mitigation
+with the environment in which it is deployed.
+
+Interplay among Mitigations {#interplay}
 =========================
 
 One of the key considerations in selecting mitigations is how to 
 manage the interplay among different mechanisms.  Care must be taken
 to avoid situations where a mitigation is rendered fruitless because 
-of a different mitigation is working at a different time scale or
-with a different aim.  As an example, there is work in progress in 
-IEEE 802 to organize the “randomization” of MAC Addresses, 
-ensuring that the address varies as the device
+of a different mitigation which is working at a different time scale or
+with a different aim.  
+
+As an example, there is work in progress in  IEEE 802 to standardize 
+a method for the randomization of MAC Addresses.  This work aims 
+to enable a mitigation in which the MAC address varies as the device
 connects to different networks, or connects at different times. In
-theory, the randomization will mitigate the tracking by MAC
+theory, the randomization will mitigate tracking by MAC
 address. However, the randomization will be defeated if the adversary
 can link the randomized MAC address to other identifiers such as the 
-interface identifier in IPv6 addresses, the unique
+interface identifier used in IPv6 addresses, the unique
 identifiers used in DHCP or DHCPv6, or unique identifiers used in
-various link-local discovery protocols.  The need to consider the
-interplay among responses is a general one, and this section will 
-examine some common interactions.
+various link-local discovery protocols. 
+
+For mitigations which rely on aggregation to separate the origin of
+traffic from its destination, care must be taken that the protocol
+mechanics do not expose origin IP through secondary means. {{I-D.draft-vandergaast-edns-client-subnet}}
+for example, proposes a method to carry the IP address or subnet
+of a querying party through a recursive resolver to an authoritative
+resolver.  Even with a truncated IP address, this mechanism increases
+the likelihood that a pervasive monitor would be able to associate
+query traffic and responses.  If a client wished to ensure that its
+traffic did not expose this data, it would need to require that its
+stub resolver emit any privacy-sensitive queries with a source
+NETMASK set to 0, as detailed in Section 5.1 of {{I-D.draft-vandergaast-edns-client-subnet}}.  Given that setting
+this only occasionally might also be used a signal to observors,
+any client wishing to have any privacy sensitive traffic would,
+in essence have to emit this for every query.  While this would
+succeed at providing the required privacy, given the mechanism
+proposed, it would also mean no split-DNS adjustments in response
+would be possible for the privacy sensitive client.  
 
 
-IANA Considerations
+
+
+IANA Considerations {#IANA}
 ===================
 
 This memo makes no request of IANA.
 
 
-Security Considerations
+Security Considerations {#Security}
 =======================
 
 This memorandum describes a series of mitigations to the
@@ -339,7 +437,15 @@ attacks described in {{RFC7258}}.  No such list could possibly
 be comprehensive, nor is the attack therein described the 
 only possible attack.
 
+Contributors {Contributors}
+============
 
+This document is derived in part from the work initially done on 
+the Perpass mailing list and at the STRINT workshop.  Work from
+Brian Trammell, Bruce Schneier, Christian Huitema, Cullen Jennings,
+Daniel Borkmann, and Richard Barnes is incorporated here, as are
+ideas and commentary from Jeff Hodges, Phillip Hallam-Baker, and
+Stephen Farrell.
 
 --- back
 
