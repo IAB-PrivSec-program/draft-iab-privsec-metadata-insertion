@@ -22,6 +22,8 @@ author:
 
 normative:
   RFC2119:
+  RFC4949:
+  RFC6973:
   RFC7258:
   I-D.iab-privsec-confidentiality-threat:
 
@@ -34,7 +36,7 @@ informative:
   RFC4306:
   RFC5246:
   RFC2015:
-  I-D.draft-vandergaast-edns-client-subnet:
+  I-D.ietf-dnsop-edns-client-subnet:
   STRINT:
     target: https://www.w3.org/2014/strint/draft-iab-strint-report.html
     title:  Strint Workshop Report
@@ -404,7 +406,7 @@ various link-local discovery protocols.
 
 For mitigations which rely on aggregation to separate the origin of
 traffic from its destination, care must be taken that the protocol
-mechanics do not expose origin IP through secondary means. {{I-D.draft-vandergaast-edns-client-subnet}}
+mechanics do not expose origin IP through secondary means. {{I-D.ietf-dnsop-edns-client-subnet}}
 for example, proposes a method to carry the IP address or subnet
 of a querying party through a recursive resolver to an authoritative
 resolver.  Even with a truncated IP address, this mechanism increases
@@ -412,7 +414,7 @@ the likelihood that a pervasive monitor would be able to associate
 query traffic and responses.  If a client wished to ensure that its
 traffic did not expose this data, it would need to require that its
 stub resolver emit any privacy-sensitive queries with a source
-NETMASK set to 0, as detailed in Section 5.1 of {{I-D.draft-vandergaast-edns-client-subnet}}.  Given that setting
+NETMASK set to 0, as detailed in Section 5.1 of {{I-D.draft-ietf-dnsop-edns-client-subnet}}.  Given that setting
 this only occasionally might also be used a signal to observors,
 any client wishing to have any privacy sensitive traffic would,
 in essence have to emit this for every query.  While this would
