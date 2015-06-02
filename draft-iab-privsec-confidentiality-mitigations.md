@@ -2,7 +2,7 @@
 title: Confidentiality in the Face of Pervasive Surveillance
 abbrev: privsec-mitigations 
 docname: draft-iab-privsec-confidentiality-mitigations-latest
-date: 2015-05-19
+date: 2015-06-02
 category: info
 
 ipr: trust200902
@@ -135,7 +135,10 @@ Key Exfiltration:
 from a collaborator, deliberately or unwittingly, to an attacker.
 
 Content Exfiltration:
-: The transmission of the content of a communication from a collaborator, deliberately or unwittingly, to an attacker
+: The transmission of the content of a communication from a collaborator, deliberately or unwittingly, to an attacker.
+
+Data Minimization: 
+With respect to protocol design, refers to the practice of only exposing the minimum amount of data or metadata necessary for the task supported by that protocol to the other endpoint(s) and/or devices along the path.
 
 Available Mitigations	{#responses}
 =====================
