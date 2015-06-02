@@ -70,6 +70,73 @@ for those threats and to lay out the interactions among them should
 they be deployed in combination.
 
 
+# Terminology {#terminology}
+
+This document makes extensive use of standard security and privacy
+terminology; see {{RFC4949}} and {{RFC6973}}. Terms used from
+{{RFC6973}} include Eavesdropper, Observer, Initiator, Intermediary,
+Recipient, Attack (in a privacy context), Correlation, Fingerprint,
+Traffic Analysis, and Identifiability (and related terms). In
+addition, we use a few terms that are specific to the attacks
+discussed in this document. Note especially that "passive" and "active" below
+do not refer to the effort used to mount the attack; a "passive attack"
+is any attack that accesses a flow but does not modify it, while an
+"active attack" is any attack that modifies a flow.  Some passive attacks
+involve active interception and modifications of devices, rather than simple
+access to the medium.  The introduced terms are:
+
+Pervasive Attack:
+: An attack on Internet communications that makes
+use of access at a large number of points in the network, or otherwise
+provides the attacker with access to a large amount of Internet
+traffic; see {{RFC7258}}.
+
+Passive Pervasive Attack:  
+: An eavesdropping attack undertaken by a pervasive attacker, in which the
+packets in a traffic stream between two endpoints are intercepted, but
+in which the attacker does not modify the packets in the traffic
+stream between two endpoints, modify the treatment of packets in the
+traffic stream (e.g. delay, routing), or add or remove packets in the
+traffic stream. Passive pervasive attacks are undetectable from the
+endpoints.  Equivalent to passive wiretapping as defined in {{RFC4949}};
+we use an alternate term here since the methods employed are wider
+than those implied by the word "wiretapping", including the active
+compromise of intermediate systems.
+
+Active Pervasive Attack:
+: An attack undertaken by a pervasive attacker, which in addition to
+the elements of a passive pervasive attack, also includes modification,
+addition, or removal of
+packets in a traffic stream, or modification of treatment of packets
+in the traffic stream. Active pervasive attacks provide more
+capabilities to the attacker at the risk of possible detection at the
+endpoints. Equivalent to active wiretapping as defined in {{RFC4949}}.
+
+Observation:
+: Information collected directly from communications by an
+eavesdropper or observer. For example, the knowledge that
+&lt;alice@example.com&gt; sent a message to &lt;bob@example.com&gt;
+via SMTP taken from the headers of an observed SMTP message would be
+an observation.
+
+Inference:
+: Information derived from analysis of information collected
+directly from communications by an eavesdropper or observer. For
+example, the knowledge that a given web page was accessed by a given
+IP address, by comparing the size in octets of measured network flow
+records to fingerprints derived from known sizes of linked resources
+on the web servers involved, would be an inference.
+
+Collaborator:
+: An entity that is a legitimate participant in a communication, and provides information about that communication to an attacker. Collaborators may either deliberately or unwittingly cooperate with the attacker, in the latter case because the attacker has subverted the collaborator through technical, social, or other means.
+
+Key Exfiltration:
+: The transmission of cryptographic keying material for an encrypted communication
+from a collaborator, deliberately or unwittingly, to an attacker.
+
+Content Exfiltration:
+: The transmission of the content of a communication from a collaborator, deliberately or unwittingly, to an attacker
+
 Available Mitigations	{#responses}
 =====================
 
@@ -101,7 +168,7 @@ attack.
    |                          |                                        |
    | Active                   | Authentication, monitoring             |
    |                          |                                        |
-   | Metadata Analysis        | Data Minimiaztion                      |
+   | Metadata Analysis        | Data Minimization                      |
    |                          |                                        |
    | Static key exfiltration  | Encryption with per-session state      |
    |                          | (PFS)                                  |
@@ -342,7 +409,7 @@ the likelihood that a pervasive monitor would be able to associate
 query traffic and responses.  If a client wished to ensure that its
 traffic did not expose this data, it would need to require that its
 stub resolver emit any privacy-sensitive queries with a source
-NETMASK set to 0, as detailed in Section 5.1.  Given that setting
+NETMASK set to 0, as detailed in Section 5.1 of {{I-D.draft-vandergaast-edns-client-subnet}}.  Given that setting
 this only occasionally might also be used a signal to observors,
 any client wishing to have any privacy sensitive traffic would,
 in essence have to emit this for every query.  While this would
