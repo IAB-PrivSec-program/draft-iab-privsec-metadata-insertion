@@ -414,13 +414,16 @@ the likelihood that a pervasive monitor would be able to associate
 query traffic and responses.  If a client wished to ensure that its
 traffic did not expose this data, it would need to require that its
 stub resolver emit any privacy-sensitive queries with a source
-NETMASK set to 0, as detailed in Section 5.1 of {{I-D.draft-ietf-dnsop-edns-client-subnet}}.  Given that setting
-this only occasionally might also be used a signal to observors,
+NETMASK set to 0, as detailed in Section 6.1 of {{I-D.draft-ietf-dnsop-edns-client-subnet}}.  Given that setting
+this only occasionally might also be used a signal to observers,
 any client wishing to have any privacy sensitive traffic would,
 in essence have to emit this for every query.  While this would
 succeed at providing the required privacy, given the mechanism
 proposed, it would also mean no split-DNS adjustments in response
-would be possible for the privacy sensitive client.  
+would be possible for the privacy sensitive client.  A similar 
+issue is found in the Forwarded-For header documented in {{RFC 7239}}
+which allows a proxy to transmit data which is otherwise lost by the
+proxying process, such as the IP address.
 
 
 
