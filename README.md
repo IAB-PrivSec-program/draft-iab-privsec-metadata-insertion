@@ -1,6 +1,6 @@
-# draft-iab-privsec-confidentiality-mitigations
+# draft-iab-privsec-metadata-insertion
 
-This is the working area for the IAB privsec-program draft of draft-iab-privsec-confidentiality-mitigations
+This is the working area for the IAB privsec-program draft of draft-iab-privsec-metadata-insertion
 
 ## Contributing
 
