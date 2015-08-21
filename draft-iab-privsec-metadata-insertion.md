@@ -149,6 +149,14 @@ Given the threat model laid out in
 {{I-D.iab-privsec-confidentiality-threat}}., how should protocol
 designs handle the loss of metadata derived from cleartext?
 
+One of the core mitigations for the loss of confidentiality is data minimization, which limits the amount of data disclosed to those elements absolutely required to complete the relevant protocol exchange.  When data minimization is in effect, some information which was previously available may be removed from specific protocol exchanges.  
+
+In some cases, other actors within a protocol context will continue to have access to the information which has been withdrawn from specific protocol exchanges.  If those actors attach the information as metadata to those protocol elements, the confidentiality effect of data minimization is lost.  While it is tempting to restore previous information flows, this design pattern should be avoided, as it contributes to the overall loss of confidentiality for the Internet.  
+
+The restoration of information is particularly tempting for systems whose primary function is not to provide confidentiality.  A proxy providing compression, for example, may wish to restore the identity of the requesting party; similarly a VPN system used to provide channel security may believe that origin IP should be restored.   Actors considering adding these elements  metadata may believe that they understand the relevant privacy considerations or believe that none exist.  
+
+The IAB recommends against restoration in these cases unless a positive affirmation of approval for restoration has been received from the actor whose data will be added.  In general, we recommend that the actor add such metadata themselves so that it flows end-to-end, rather than requiring the action of other parties.  Where this is not possible, opt-in methods for consent are strongly recommended; opt-out systems, especially for previously deployed systems, may provide sufficient targeting that the most vulnerable users would be reluctant to employ them.
+
 
 
 Deployment considerations {#deployment}
