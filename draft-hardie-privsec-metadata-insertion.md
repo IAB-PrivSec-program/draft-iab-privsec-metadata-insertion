@@ -37,7 +37,7 @@ informative:
   RFC5246:
   RFC5389:
   RFC2015:
-  rFC7329:
+  rFC7239:
   I-D.ietf-dnsop-edns-client-subnet:
   STRINT:
     target: https://www.w3.org/2014/strint/draft-iab-strint-report.html
