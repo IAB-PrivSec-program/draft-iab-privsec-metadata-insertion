@@ -2,7 +2,7 @@
 title: Design considerations for Metadata Insertion
 abbrev: privsec-metadata-insertion 
 docname: draft-hardie-privsec-metadata-insertion-latest
-date: 2015-1--13
+date: 2015-10-22
 category: info
 
 ipr: trust200902
