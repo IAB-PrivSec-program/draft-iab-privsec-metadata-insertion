@@ -153,9 +153,9 @@ In some cases, other actors within a protocol context will continue to have acce
 
 The restoration of information is particularly tempting for systems whose primary function is not to provide confidentiality.  A proxy providing compression, for example, may wish to restore the identity of the requesting party; similarly a VPN system used to provide channel security may believe that origin IP should be restored.   Actors considering restoring metadata may believe that they understand the relevant privacy considerations or believe that, because the primary purpose of the service was not privacy-related, none exist.  Examples of this design pattern include {{RFC7239}} and {{I-D.ietf-dnsop-edns-client-subnet}}. 
 
-While it may be tempting to restore previous information flows, this design pattern should be avoided, as it contributes to the overall loss of confidentiality for the Internet.  This document recommends against restoration in these cases unless a positive affirmation of approval for restoration has been received from the actor whose data will be added.  In general, we recommend that the actor add such metadata themselves so that it flows end-to-end, rather than requiring the action of other parties.  Where this is not possible, opt-in methods for consent are strongly recommended; opt-out systems, especially for previously deployed systems, may provide sufficient targeting that the most vulnerable users would be reluctant to employ them.
-
-
+Advice	{#advice}
+=====================
+Avoid this design pattern.  It contributes to the overall loss of confidentiality for the Internet and trust in the Internet as a medium.  Do not add metadata to flows at intermediary devices unless a positive affirmation of approval for restoration has been received from the actor whose data will be added.  Instead, design the protocol so that the actor can add such metadata themselves so that it flows end-to-end, rather than requiring the action of other parties. In addition to improving privacy, this approach ensures consistent availability between the communicating parties, no matter what path is taken.
 
 Deployment considerations {#deployment}
 =========================
