@@ -37,7 +37,8 @@ informative:
   RFC5246:
   RFC5389:
   RFC2015:
-  rFC7239:
+  RFC7239:
+  RFC7626:
   I-D.ietf-dnsop-edns-client-subnet:
   STRINT:
     target: https://www.w3.org/2014/strint/draft-iab-strint-report.html
@@ -152,6 +153,39 @@ One of the core mitigations for the loss of confidentiality in the presence of p
 In some cases, other actors within a protocol context will continue to have access to the information which has been thus withdrawn from specific protocol exchanges.  If those actors attach the information as metadata to those protocol exchange, the confidentiality effect of data minimization is lost.  
 
 The restoration of information is particularly tempting for systems whose primary function is not to provide confidentiality.  A proxy providing compression, for example, may wish to restore the identity of the requesting party; similarly a VPN system used to provide channel security may believe that origin IP should be restored.   Actors considering restoring metadata may believe that they understand the relevant privacy considerations or believe that, because the primary purpose of the service was not privacy-related, none exist.  Examples of this design pattern include "Forward-for" described in {{RFC7239}} and anointing DNS queries with originating network information as described in {{I-D.ietf-dnsop-edns-client-subnet}}. 
+
+Forward-for in Forwarded HTTP Extension
+---------------------------------------
+
+{{RFC7239}} defines an HTTP header extension that seeks to add back
+certain network metadata that can be lost in the process of proxying a
+connection. The Forwarded-for extension allows a proxy to include the
+originating IP address as part of the HTTP request. While there are
+many types of HTTP proxies, some proxies seek to specifically
+disassociate the origin IP address from the request, and adding back
+this metadata without some explicit action of the user may unwittingly
+expose metadata that users are specifically seeking to protect through
+the use of such a proxy.
+
+IP Address Propagation in DNS Requests
+--------------------------------------
+
+{{I-D.ietf-dnsop-edns-client-subnet}} describes and EDNS0 extension
+that can propagate the IP address of the originating DNS query through
+the DNS hierarchy of Recursive Resolvers to Authoritative
+Nameservers. Many Authoritative Nameservers will tailor their
+responses based on the IP address of the query, to provide a response
+that is network-topologically more "close" to the query IP
+address. Increasingly, Recursive Resolvers that clients use may not be
+close to the originating IP address, so by carrying the originating
+query IP address through to the Authoritative Nameserver, that server
+can provide a more topologically-relevant response to the user. DNS
+privacy is a significant challenge {{RFC7626}} which would only be
+exacerbated by recursive resolvers no longer serving as aggregation
+points for DNS queries and instead propagating those addresses up
+through to the Authoritative Nameservers which would then be in a
+position to profile the DNS traffic they receive based on originating
+IP address.
 
 Advice	{#advice}
 =====================
