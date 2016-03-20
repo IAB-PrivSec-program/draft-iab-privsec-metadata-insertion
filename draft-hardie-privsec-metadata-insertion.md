@@ -142,16 +142,16 @@ Content Exfiltration:
 : The transmission of the content of a communication from a collaborator, deliberately or unwittingly, to an attacker.
 
 Data Minimization: 
-With respect to protocol design, refers to the practice of only exposing the minimum amount of data or metadata necessary for the task supported by that protocol to the other endpoint(s) and/or devices along the path.
+: With respect to protocol design, refers to the practice of only exposing the minimum amount of data or metadata necessary for the task supported by that protocol to the other endpoint(s) and/or devices along the path.
 
 Design patterns	{#patterns}
 =====================
 
-One of the core mitigations for the loss of confidentiality in the presence of pervasive surveillance is data minimization, which limits the amount of data disclosed to those elements absolutely required to complete the relevant protocol exchange.  When data minimization is in effect, some information which was previously available may be removed from specific protocol exchanges.  The information may be removed explicitly (by a browser suppressing cookies during private modes, as an example) or by other means.  As noted in {{RFC7624}}, some topologies which aggregate or alter the network path also acted to reduce the ease with which metadata is available to eavesdroppers.
+One of the core mitigations for the loss of confidentiality in the presence of pervasive surveillance is data minimization, which limits the amount of data disclosed to those elements absolutely required to complete the relevant protocol exchange.  When data minimization is in effect, some information which was previously available may be removed from specific protocol exchanges.  The information may be removed explicitly (by a browser suppressing cookies during private modes, as an example) or by other means.  As noted in {{RFC7624}}, some topologies which aggregate or alter the network path also act to reduce the ease with which metadata is available to eavesdroppers.
 
 In some cases, other actors within a protocol context will continue to have access to the information which has been thus withdrawn from specific protocol exchanges.  If those actors attach the information as metadata to those protocol exchange, the confidentiality effect of data minimization is lost.  
 
-The restoration of information is particularly tempting for systems whose primary function is not to provide confidentiality.  A proxy providing compression, for example, may wish to restore the identity of the requesting party; similarly a VPN system used to provide channel security may believe that origin IP should be restored.   Actors considering restoring metadata may believe that they understand the relevant privacy considerations or believe that, because the primary purpose of the service was not privacy-related, none exist.  Examples of this design pattern include {{RFC7239}} and {{I-D.ietf-dnsop-edns-client-subnet}}. 
+The restoration of information is particularly tempting for systems whose primary function is not to provide confidentiality.  A proxy providing compression, for example, may wish to restore the identity of the requesting party; similarly a VPN system used to provide channel security may believe that origin IP should be restored.   Actors considering restoring metadata may believe that they understand the relevant privacy considerations or believe that, because the primary purpose of the service was not privacy-related, none exist.  Examples of this design pattern include "Forward-for" described in {{RFC7239}} and anointing DNS queries with originating network information as described in {{I-D.ietf-dnsop-edns-client-subnet}}. 
 
 Advice	{#advice}
 =====================
